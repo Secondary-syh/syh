@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <!-- Countdown & Gift -->
+  <div id="countdownContainer">
+    <h1 id="countdownTimer"></h1>
+  </div>
+
+  <div id="greetingContainer" style="display: none;">
+    <h2>Selamat Ulang Tahun 🎉</h2>
+    <img src="pict/gift.png" alt="Kado" id="giftImage" />
+  </div>
+
+
+
+    <div class="card">
+      <div class="outside">
+        <div class="front">
+          <p>Happy Birthday</p>
+          <div class="cake">
+            <div class="top-layer"></div>
+            <div class="middle-layer"></div>
+            <div class="bottom-layer"></div>
+            <div class="candle"></div>
+          </div>
+        </div>
+        <div class="back"></div>
+      </div>
+      <div class="inside">
+        <p>“Tanganku tidak akan sampai untuk mengusap lembut pipimu, kakiku tak kuat untuk berlari ketempatmu, tapi do’aku akan selalu menyapamu. Selamat ulang tahun cintaku, semoga bahagia dan sukses selalu.”</p>
+        <h1>&#127873;</h1>
+      </div>
+    </div>
+
+    <div class="love-container"></div>
+
+    <!-- Modal Foto -->
+    <div id="photoModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="photo-grid">
+          <img src="pict/1.jpg" alt="Foto 1" />
+          <img src="pict/2.jpg" alt="Foto 2" />
+          <img src="pict/3.jpg" alt="Foto 3" />
+          <h3 id="tersembunyi">SAYANGKUU &#128149;</h3>
+          <img src="pict/4.jpg" alt="Foto 4" />
+          <img src="pict/5.jpg" alt="Foto 5" />
+          <img src="pict/6.jpg" alt="Foto 6" />
+          <img src="pict/7.jpg" alt="Foto 7" />
+          <img src="pict/8.jpg" alt="Foto 8" />
+          <img src="pict/9.jpg" alt="Foto 9" />
+          <h3 id="tersembunyi">CINTAKUU &#128147;</h3>
+          <img src="pict/10.jpg" alt="Foto 10" />
+          <img src="pict/11.jpg" alt="Foto 11" />
+          <img src="pict/12.jpg" alt="Foto 12" />
+          <h3 id="tersembunyi">NIZWAAKU &#129487;</h3>
+          <img src="pict/13.jpg" alt="Foto 13" />
+          <img src="pict/14.jpg" alt="Foto 14" />
+          <img src="pict/15.jpg" alt="Foto 15" />
+          <!-- Tambahkan hingga 13.jpg jika perlu -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Musik & Script -->
+    <div class="music-controls">
+      <button id="playMusic">Putar Musik</button>
+      <button id="stopMusic">Berhenti Musik</button>
+    </div>
+    <audio id="bgMusic" loop>
+      <source src="music/happy-birthday.weba" type="audio/mpeg" />
+      Browser tidak mendukung audio.
+    </audio>
+
+    <script>
+      const modal = document.getElementById("photoModal");
+      const emoji = document.querySelector(".inside h1");
+      const closeBtn = document.querySelector(".close");
+      const loveContainer = document.querySelector(".love-container");
+      let loveInterval;
+
+      emoji.addEventListener("click", () => {
+        modal.style.display = "block";
+        loveInterval = setInterval(showLoveExplosion, 500); // efek terus-menerus
+      });
+
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+        clearInterval(loveInterval);
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+          clearInterval(loveInterval);
+        }
+      });
+
+      function showLoveExplosion() {
+        for (let i = 0; i < 30; i++) {
+          const heart = document.createElement("div");
+          heart.classList.add("heart");
+
+          const modalRect = modal.getBoundingClientRect();
+          const randX = Math.random() * modalRect.width + modalRect.left;
+          const randY = Math.random() * modalRect.height + modalRect.top;
+
+          heart.style.left = randX + "px";
+          heart.style.top = randY + "px";
+
+          const angle = Math.random() * 2 * Math.PI;
+          const radius = Math.random() * 150;
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius;
+
+          heart.style.setProperty("--x", `${x}px`);
+          heart.style.setProperty("--y", `${y}px`);
+
+          loveContainer.appendChild(heart);
+
+          setTimeout(() => {
+            heart.remove();
+          }, 1000);
+        }
+      }
+
+      // Musik
+      const playBtn = document.getElementById("playMusic");
+      const stopBtn = document.getElementById("stopMusic");
+      const bgMusic = document.getElementById("bgMusic");
+
+      playBtn.addEventListener("click", () => {
+        bgMusic.play();
+      });
+
+      stopBtn.addEventListener("click", () => {
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+      });
+      window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && modal.style.display === "block") {
+    modal.style.display = "none";
+    clearInterval(loveInterval);
+  }
+});
+  // Countdown
+  const countdownContainer = document.getElementById("countdownContainer");
+  const countdownTimer = document.getElementById("countdownTimer");
+  const greetingContainer = document.getElementById("greetingContainer");
+  const giftImage = document.getElementById("giftImage");
+  const card = document.querySelector(".card");
+  const musicControls = document.querySelector(".music-controls");
+
+  let countdownTime = 5; // detik (bisa diubah)
+  countdownTimer.textContent = countdownTime;
+
+  const countdownInterval = setInterval(() => {
+    countdownTime--;
+    countdownTimer.textContent = countdownTime;
+    if (countdownTime === 0) {
+      clearInterval(countdownInterval);
+      showGreeting();
+    }
+  }, 1000);
+
+  function showGreeting() {
+    countdownContainer.style.display = "none";
+    greetingContainer.style.display = "flex";
+  }
+
+  giftImage.addEventListener("click", () => {
+    greetingContainer.style.display = "none";
+    card.style.display = "block";
+    musicControls.style.display = "flex";
+  });
+
+  // Sembunyikan kartu dan musik sebelum countdown selesai
+  card.style.display = "none";
+  musicControls.style.display = "none";
+
+
+    </script>
+  </body>
+</html>
