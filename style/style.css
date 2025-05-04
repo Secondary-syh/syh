@@ -1,0 +1,374 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #ffdfef; /* warna dari palet */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.card {
+  width: 90%;
+  max-width: 640px;
+  height: 400px;
+  perspective: 1200px;
+  transition: 1s;
+  position: relative;
+}
+
+.card:hover {
+  transform: rotate(-5deg);
+}
+
+.card:hover .outside {
+  transform: rotateY(-130deg);
+}
+
+.outside,
+.inside {
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  left: 50.1%;
+}
+
+.inside {
+  background: linear-gradient(to right, #e7e7e7, #ffffff 30%);
+  line-height: 2.5;
+  padding: 0 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  left: 50%;
+}
+
+.outside {
+  transform-style: preserve-3d;
+  z-index: 1;
+  transform-origin: left;
+  transition: 2s;
+  cursor: pointer;
+}
+
+.front,
+.back {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  transform: rotateX(0deg);
+}
+
+.front {
+  background-color: #ffffff;
+}
+
+.back {
+  transform: rotateY(180deg);
+  background: linear-gradient(to left, #e7e7e7, #ffffff 30%);
+}
+
+.cake {
+  width: 100%;
+  position: absolute;
+  bottom: 30px;
+}
+
+.top-layer,
+.middle-layer,
+.bottom-layer {
+  height: 50px;
+  width: 160px;
+  background-repeat: repeat;
+  background-size: 40px 80px;
+  background-position: 20px 0;
+  background-image: linear-gradient(
+      transparent 30px,
+      #eabde6 30px,
+      #eabde6 40px,
+      transparent 40px
+    ),
+    radial-gradient(circle at 20px 5px, #aa60c8 20px, #d69ade 21px);
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  margin: auto;
+}
+
+.middle-layer {
+  transform: scale(0.85);
+  top: 4px;
+}
+
+.top-layer {
+  transform: scale(0.7);
+  top: 18px;
+}
+
+.candle {
+  height: 30px;
+  width: 10px;
+  background: repeating-linear-gradient(
+    45deg,
+    #aa60c8 0,
+    #aa60c8 5px,
+    #d69ade 5px,
+    #d69ade 10px
+  );
+  position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  bottom: 135px;
+}
+
+.candle:before {
+  content: "";
+  position: absolute;
+  height: 12px;
+  width: 12px;
+  background-color: #ffdfef;
+  border-radius: 0 50% 50% 50%;
+  bottom: 34px;
+  transform: rotate(45deg);
+  left: -1px;
+}
+
+.outside p {
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-top: 20px;
+  text-align: center;
+  letter-spacing: 3px;
+  color: #000046;
+}
+
+.inside p {
+  font-size: 8px;
+  line-height: 10px;
+  cursor: pointer;
+}
+
+.inside h1 {
+  font-size: 60px;
+  line-height: 60px;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .card {
+    height: 320px;
+  }
+
+  .top-layer,
+  .middle-layer,
+  .bottom-layer {
+    width: 140px;
+    height: 40px;
+    background-size: 30px 60px;
+  }
+
+  .candle {
+    height: 24px;
+    width: 8px;
+    bottom: 110px;
+  }
+
+  .candle:before {
+    height: 10px;
+    width: 10px;
+    bottom: 28px;
+  }
+
+  .outside p {
+    font-size: 12px;
+  }
+
+  .inside h1 {
+    font-size: 40px;
+    line-height: 40px;
+  }
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 80px auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  cursor: pointer;
+  color: #333;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 15px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.photo-grid img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.photo-grid img:nth-child(3n) {
+  grid-row: span 2;
+  height: auto;
+}
+
+.photo-grid img:nth-child(4n) {
+  grid-column: span 2;
+  height: auto;
+}
+
+.photo-grid img:hover {
+  transform: scale(1.05);
+}
+
+.love-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 99;
+}
+
+.heart {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: #d69ade;
+  transform: translate(-50%, -50%) scale(1);
+  animation: explode 1s ease-out forwards;
+  clip-path: polygon(50% 0%, 61% 20%, 80% 20%, 70% 40%, 75% 60%, 50% 50%, 25% 60%, 30% 40%, 20% 20%, 39% 20%);
+  opacity: 1;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.3);
+    opacity: 0;
+  }
+}
+.music-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.music-controls button {
+  padding: 8px 12px;
+  margin-left: 5px;
+  font-size: 14px;
+  background-color: #d69ade;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.music-controls button:hover {
+  background-color: #aa60c8;
+}
+.candle::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  width: 10px;
+  height: 20px;
+  background: radial-gradient(circle, #ffd700 40%, transparent 41%);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  animation: flicker 0.2s infinite;
+}
+
+@keyframes flicker {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.2); }
+}
+
+#countdownContainer, #greetingContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ffdfef;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+#countdownTimer {
+  font-size: 50px;
+  color: #aa60c8;
+}
+
+#greetingContainer h2 {
+  font-size: 32px;
+  color: #aa60c8;
+  margin-bottom: 20px;
+  word-break: break-word;
+}
+
+#giftImage {
+  width: 150px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+#giftImage:hover {
+  transform: scale(1.1);
+}
+
+#tersembunyi {
+  color: #aa60c8;;
+  align-items: center;
+}
